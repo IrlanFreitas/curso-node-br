@@ -1,0 +1,20 @@
+{
+  "name": "curso-node-br",
+  "version": "1.0.0",
+  "description": "Aplicação de curso sobre node do NodeBR",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IrlanFreitas/curso-node-br.git"
+  },
+  "author": "Irlan Freitas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IrlanFreitas/curso-node-br/issues"
+  },
+  "homepage": "https://github.com/IrlanFreitas/curso-node-br#readme"
+}

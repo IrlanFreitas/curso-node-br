@@ -1,0 +1,17 @@
+{
+  "name": "modulo-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^7.1.0"
+  },
+  "dependencies": {
+    "commander": "^5.0.0"
+  }
+}

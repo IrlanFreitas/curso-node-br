@@ -1,10 +1,14 @@
 const Routes = require("./base/routes");
 const Joi = require("@hapi/joi");
-const Boom = require("boom")
+const Boom = require("boom");
 
 const failAction = (request, headers, erro) => {
   throw erro;
 };
+
+const headers = Joi.object({
+  authorization: Joi.string().required(),
+}).unknown();
 
 class HeroRoutes extends Routes {
   constructor(db) {
@@ -17,7 +21,7 @@ class HeroRoutes extends Routes {
       path: "/herois",
       method: "GET",
       config: {
-        tags: ['api'],
+        tags: ["api"],
         description: "Deve listar herois",
         notes: "Pode paginar resultados e filtrar por nome",
         validate: {
@@ -26,6 +30,7 @@ class HeroRoutes extends Routes {
           //params -> na url :id
           //query -> ?skip=10&limit=100
           failAction,
+          headers,
           query: Joi.object({
             skip: Joi.number().integer().default(0),
             limit: Joi.number().integer().default(10),
@@ -52,11 +57,12 @@ class HeroRoutes extends Routes {
       path: "/herois",
       method: "POST",
       config: {
-        tags: ['api'],
+        tags: ["api"],
         description: "Deve adicionar heroi",
         notes: "Cadastrando o heroi por nome e poder",
         validate: {
           failAction,
+          headers,
           payload: Joi.object({
             nome: Joi.string().required().min(3).max(100),
             poder: Joi.string().required().min(3).max(100),
@@ -83,11 +89,12 @@ class HeroRoutes extends Routes {
       path: "/herois/{id}",
       method: "PATCH",
       config: {
-        tags: ['api'],
+        tags: ["api"],
         description: "Deve atualizar herois",
         notes: "Modificando somente o necessário",
         validate: {
           failAction,
+          headers,
           params: Joi.object({
             id: Joi.string().required(),
           }),
@@ -107,7 +114,7 @@ class HeroRoutes extends Routes {
           const result = await this.db.update(id, dados);
 
           if (result.nModified !== 1) {
-            return Boom.preconditionFailed("Id não encontrado")
+            return Boom.preconditionFailed("Id não encontrado");
           }
 
           return { message: "Heroi atualizado com sucesso" };
@@ -124,11 +131,12 @@ class HeroRoutes extends Routes {
       path: "/herois/{id}",
       method: "DELETE",
       config: {
-        tags: ['api'],
+        tags: ["api"],
         description: "Deve deletar herois",
         notes: "Removendo por id do banco de dados",
         validate: {
           failAction,
+          headers,
           params: Joi.object({
             id: Joi.string().required(),
           }),
@@ -136,15 +144,14 @@ class HeroRoutes extends Routes {
       },
       handler: async (request) => {
         try {
-          const { id } = request.params
-          const result = await this.db.delete(id)
+          const { id } = request.params;
+          const result = await this.db.delete(id);
 
           if (result.deletedCount !== 1) {
-            return Boom.preconditionFailed("Id não encontrado")
+            return Boom.preconditionFailed("Id não encontrado");
           }
-          
-          return { message: "Heroi deletado com sucesso" }
 
+          return { message: "Heroi deletado com sucesso" };
         } catch (error) {
           // console.log("DEU RUIM: ", error);
           return Boom.internal();

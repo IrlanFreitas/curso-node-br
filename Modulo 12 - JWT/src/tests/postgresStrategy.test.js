@@ -7,7 +7,7 @@ const MOCK_HEROI_CADASTRAR = { nome: "Gavião Negro", poder: "Mira" };
 const MOCK_HEROI_ATUALIZAR = { nome: "Batman", poder: "Dinheiro" };
 let context = {}
 
-describe("Postgres Strategy", function() {
+describe.only("Postgres Strategy", function() {
   this.timeout(Infinity);
 
   this.beforeAll(async function() {

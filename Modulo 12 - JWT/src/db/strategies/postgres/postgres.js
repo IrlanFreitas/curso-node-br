@@ -2,6 +2,7 @@ const ICrud = require("../interfaces/interfaceCrud");
 const Sequelize = require("sequelize");
 
 class Postgres extends ICrud {
+
   constructor(connection, schema) {
     super();
     this._connection = connection;
@@ -31,6 +32,7 @@ class Postgres extends ICrud {
   static async defineModel(connection, schema) {
     const model = connection.define(schema.name, schema.schema, schema.options);
     await model.sync();
+
     return model;
   }
 
@@ -40,12 +42,17 @@ class Postgres extends ICrud {
     return dataValues;
   }
 
-  async update(id, item) {
-    return this._schema.update(item, { where: { id } });
+  async update(id, item, upsert) {
+    const fn = upsert ? 'upsert' : 'update'
+    
+    return this._schema[fn](item, { where: { id } });
   }
 
-  async read(item = {}) {
+  async read(item = {}, skip, limit) {
+    // console.log("Schema: ", this._schema);
+    
     return this._schema.findAll({ where: item, raw: true });
+    // return this._schema.findAll({});
   }
 
   async delete(id) {

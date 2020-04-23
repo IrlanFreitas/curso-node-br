@@ -3,6 +3,12 @@ const api = require("./../api");
 
 let app = {};
 
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkdlcmFsZCIsImlkIjoxLCJpYXQiOjE1ODc0MjI5MzJ9.jL0Djx2JWsK9Befa2_I-OZPQAxSfSsPiphf9vK6xilE"
+
+const headers = {
+  Authorization: TOKEN
+}
+
 const MOCK_DEFAULT_CADASTRAR = {
   nome: "Static Shock",
   poder: "To be black",
@@ -15,7 +21,7 @@ const MOCK_DEFAULT_ATUALIZAR = {
 
 let MOCK_ID_UPLETE = null;
 
-describe.only("Suite de teste da API Herois", function () {
+describe("Suite de teste da API Herois", function () {
 
   this.beforeAll(async () => {
     app = await api;
@@ -23,6 +29,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "POST",
       url: "/herois",
+      headers,
       payload: MOCK_DEFAULT_ATUALIZAR,
     });
 
@@ -33,6 +40,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "GET",
       url: "/herois",
+      headers,
     });
     const dados = JSON.parse(result.payload);
 
@@ -48,6 +56,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "GET",
       url: `/herois?skip=0&limit=${LIMITE}`,
+      headers,
     });
 
     const dados = JSON.parse(result.payload);
@@ -63,6 +72,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "GET",
       url: `/herois?skip=0&limit=${LIMITE}`,
+      headers,
     });
 
     const statusCode = result.statusCode;
@@ -75,6 +85,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "GET",
       url: `/herois?skip=0&limit=10&nome=${MOCK_DEFAULT_ATUALIZAR.nome}`,
+      headers,
     });
     const dados = JSON.parse(result.payload);
 
@@ -89,6 +100,7 @@ describe.only("Suite de teste da API Herois", function () {
       method: "POST",
       url: "/herois",
       payload: MOCK_DEFAULT_CADASTRAR,
+      headers,
     });
 
     const { message, _id } = JSON.parse(result.payload);
@@ -105,6 +117,7 @@ describe.only("Suite de teste da API Herois", function () {
       method: "PATCH",
       url: `/herois/${MOCK_ID_UPLETE}`,
       payload: expected,
+      headers,
     });
 
     const statusCode = result.statusCode;
@@ -118,6 +131,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "DELETE",
       url: `/herois/${MOCK_ID_UPLETE}`,
+      headers,
     });
 
     const statusCode = result.statusCode;
@@ -131,6 +145,7 @@ describe.only("Suite de teste da API Herois", function () {
     const result = await app.inject({
       method: "DELETE",
       url: `/herois/${MOCK_ID_UPLETE}`,
+      headers,
     });
 
     const statusCode = result.statusCode;
@@ -146,6 +161,7 @@ describe.only("Suite de teste da API Herois", function () {
       method: "PATCH",
       url: `/herois/ID_INVALIDO`,
       payload: { poder: "Ser foda" },
+      headers,
     });
 
     const statusCode = result.statusCode;

@@ -1,14 +1,15 @@
 {
-  "name": "modulo-6",
+  "name": "modulo-13",
   "version": "1.0.0",
   "description": "Aprendendo a usar o padrão Strategy para multi banco de dados",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
     "test": "mocha src/tests/*.test.js",
     "test:prod": "cross-env NODE_ENV=prod npm t",
-    "test:watch": "mocha src/tests/*.test.js -w"
+    "test:watch": "mocha src/tests/*.test.js -w",
+    "prod":"cross-env NODE_ENV=prod node src/api.js"
   },
-  "author": "",
+  "author": "Irlan Freitas",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^19.0.0",

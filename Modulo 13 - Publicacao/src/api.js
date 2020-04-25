@@ -1,5 +1,6 @@
-//* Usando a Swagger para documentação
 //* npm i hapi
+
+//* Usando a Swagger para documentação
 //* npm i vision inert hapi-swagger
 
 //* Usando JWT e Bcypt para segurança da aplicação
@@ -9,6 +10,8 @@
 //* Usada para mudança de ambiente, env e prod
 //* npm i dotenv
 //* npm i cross-env -g
+
+//* npm i -g heroku : Para subir o postgres no heroku
 
 const { config } = require('dotenv')
 const { join } = require('path')

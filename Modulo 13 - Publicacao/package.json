@@ -4,10 +4,7 @@
   "description": "Aprendendo a usar o padrão Strategy para multi banco de dados",
   "main": "api.js",
   "scripts": {
-    "test": "mocha src/tests/*.test.js",
-    "test:prod": "cross-env NODE_ENV=production npm t",
-    "test:watch": "mocha src/tests/*.test.js -w",
-    "prod": "cross-env NODE_ENV=production node src/api.js"
+    "start": "node src/api.js"
   },
   "author": "Irlan Freitas",
   "license": "ISC",

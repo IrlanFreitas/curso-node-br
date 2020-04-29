@@ -4,11 +4,14 @@
   "description": "Aprendendo a usar o padrão Strategy para multi banco de dados",
   "main": "src/api.js",
   "scripts": {
+    "preinstall": "npm i -g pm2",
+    "postinstall": "cross-env NODE_ENV=production npm run test",
     "start": "node src/api.js",
-    "test": "mocha src/tests/*.test.js",
+    "test": "nyc --reporter=html mocha --timeout 10000 --exit src/tests/*.test.js",
     "test:prod": "cross-env NODE_ENV=production npm t",
     "test:watch": "mocha src/tests/*.test.js -w",
-    "prod": "cross-env NODE_ENV=production node src/api.js"
+    "prod": "cross-env NODE_ENV=production node src/api.js",
+    "prod:pm2": "pm2-runtime start ecosystem.config.js --env production"
   },
   "author": "Irlan Freitas",
   "license": "ISC",
@@ -30,6 +33,7 @@
     "sequelize": "^5.21.5"
   },
   "devDependencies": {
-    "mocha": "^7.1.1"
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1"
   }
 }

@@ -31,7 +31,7 @@ describe("MongoDb suite de testes", function() {
     MOCK_HEROI_ATUALIZAR_ID = result._id;
   });
 
-  it("Verificar conexão", async () => {
+  it.skip("Verificar conexão", async () => {
     const result = await context.isConnected();
     const expected = "Conectado";
     assert.deepEqual(result, expected);

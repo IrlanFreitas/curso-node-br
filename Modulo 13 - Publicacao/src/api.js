@@ -13,15 +13,15 @@
 
 //* npm i -g heroku : Para subir o postgres no heroku
 
-const { config } = require('dotenv')
-const { join } = require('path')
-const { ok } = require('assert')
+const { config } = require("dotenv");
+const { join } = require("path");
+const { ok } = require("assert");
 
-const env = process.env.NODE_ENV || 'dev'
-ok(env === 'production' || env === 'dev', 'Env inválida, ou dev ou prod')
+const env = process.env.NODE_ENV || "dev";
+ok(env === "production" || env === "dev", "Env inválida, ou dev ou prod");
 
-const configPath = join(__dirname, './config', `.env.${env}` )
-config({ path:configPath })
+const configPath = join(__dirname, "./config", `.env.${env}`);
+config({ path: configPath });
 
 const Hapi = require("@hapi/hapi");
 
@@ -35,6 +35,7 @@ const UsuarioSchema = require("./db/strategies/postgres/schemas/usuarioSchema");
 
 const HeroRoute = require("./routes/heroRoutes");
 const AuthRoute = require("./routes/authRoutes");
+const UtilRoute = require("./routes/utilRoutes");
 
 const HapiSwagger = require("hapi-swagger");
 const Vision = require("@hapi/vision");
@@ -52,6 +53,13 @@ const mapRoutes = (instance, methods) => {
   return methods.map((method) => instance[method]());
 };
 
+const swaggerOptions = {
+  info: {
+    title: "API Herois - #CursoNodeBR",
+    version: "v1.0",
+  },
+};
+
 const main = async () => {
   const connectionPostgres = await Postgres.connect();
   const model = await Postgres.defineModel(connectionPostgres, UsuarioSchema);
@@ -61,13 +69,6 @@ const main = async () => {
   const contextMongoDb = new Context(
     new MongoDb(connectionMongoDb, HeroiSchema)
   );
-
-  const swaggerOptions = {
-    info: {
-      title: "API Herois - #CursoNodeBR",
-      version: "v1.0",
-    },
-  };
 
   await app.register([
     HapiJwt,
@@ -108,6 +109,7 @@ const main = async () => {
       new AuthRoute(JWT_SECRET, contextPostgres),
       AuthRoute.methods()
     ),
+    ...mapRoutes(new UtilRoute(), UtilRoute.methods()),
   ]);
 
   await app.start();

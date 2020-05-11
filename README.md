@@ -1,5 +1,5 @@
 # Curso NodeBR
-<br>
+
 Repo onde estão os arquivos sobre o curso free de Node da [NodeBR!](https://treinamento.nodebr.org/)
 
 - [x] Introdução
